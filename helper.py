@@ -1,5 +1,7 @@
 # helper.py
 import hashlib
+import os
+
 import requests
 import time
 
@@ -84,3 +86,20 @@ def get_word_frequency(no_of_words, most_frequent):
                            f"Server responded with status code {response.status_code}.")
     except requests.exceptions.RequestException as e:
         return False, f"Network error occurred while trying to retrieve word frequency: {str(e)}"
+
+
+def update_file(prevFilename, filename, duplicate, file_path):
+    try:
+        with open(file_path, 'rb') as f:
+            file_data = {'file': f}
+        data = {'prevFilename': prevFilename, 'filename': filename, 'duplicate': duplicate}
+        response = requests.post(BASE_URL + '/update', files=file_data, data=data)
+        if response.status_code == 200:
+            print(f"File '{filename}' updated successfully.")
+            return True
+        else:
+            print(f"Update failed for '{filename}'. Error: {response.text}")
+            return False
+    except requests.exceptions.RequestException as e:
+        print(f"Network error occurred while updating '{filename}': {str(e)}")
+        return False

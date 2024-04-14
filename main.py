@@ -1,6 +1,6 @@
 import argparse
 from ops import process_add_command, process_ls_command, process_rm_command, process_wc_command, \
-    process_fw_command
+    process_fw_command, process_update_command
 
 
 def main():
@@ -28,6 +28,15 @@ def main():
                              choices=['asc', 'desc'],
                              help='Order of frequency of words')
 
+    # subparser for 'freq-words' command
+    update_parser = subparsers.add_parser('update')
+    update_parser.add_argument('file', help='File to update')
+    update_parser.add_argument('old-name',  help='Previous file name')
+    update_parser.add_argument('--duplicate',
+                               action='store_true', help='Setting this flag will result in '
+                                                         'duplicate file creation. Default is '
+                                                         'False.')
+
     args = parser.parse_args()
 
     if args.store == 'add':
@@ -40,6 +49,8 @@ def main():
         process_wc_command()
     elif args.store == 'freq-words':
         process_fw_command(args.limit, args.order)
+    elif args.store == 'update':
+        process_update_command(args.file, args.old_name, args.duplicate)
 
 
 if __name__ == "__main__":

@@ -2,7 +2,7 @@
 import os
 from tabulate import tabulate
 from helper import file_exists, compute_md5, upload_file, delete_file, list_files, \
-    get_word_frequency
+    get_word_frequency, update_file
 
 
 def process_add_command(files):
@@ -68,3 +68,19 @@ def process_fw_command(limit, order):
             print("No records found.")
     else:
         print(data)
+
+
+def process_update_command(file, old_name, duplicate):
+    filename = os.path.basename(file)
+    print (file, old_name, duplicate)
+    file_hash = compute_md5(file)
+    exists, response = file_exists(file)
+    if exists:
+        server_hash = response.get('hash')
+        server_name = response.get('name')
+        if server_hash != file_hash and server_name == filename:
+            update_file(file, filename, False, file)
+        elif server_hash == file_hash:
+            update_file(server_name, filename, duplicate, None)
+    else:
+        upload_file(filename)
