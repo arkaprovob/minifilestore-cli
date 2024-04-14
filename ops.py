@@ -1,7 +1,8 @@
 # ops.py
 import os
 from tabulate import tabulate
-from helper import file_exists, compute_md5, upload_file, delete_file, list_files
+from helper import file_exists, compute_md5, upload_file, delete_file, list_files, \
+    get_word_frequency
 
 
 def process_add_command(files):
@@ -46,9 +47,23 @@ def process_wc_command():
     if success:
         if data:
             # Create a new list of dictionaries with only the Filename and WordCount fields
-            filtered_data = [{'Filename': item['Filename'], 'WordCount': item['WordCount']} for item in data]
+            filtered_data = [{'Filename': item['Filename'], 'WordCount': item['WordCount']} for item
+                             in data]
             print("Total Word count for each file:")
             print(tabulate(filtered_data, headers="keys"))
+        else:
+            print("No records found.")
+    else:
+        print(data)
+
+
+def process_fw_command(limit, order):
+    most_frequent = order == 'desc'
+    success, data = get_word_frequency(limit, most_frequent)
+    if success:
+        if data:
+            print("Word frequency:")
+            print(tabulate(data, headers="keys"))
         else:
             print("No records found.")
     else:

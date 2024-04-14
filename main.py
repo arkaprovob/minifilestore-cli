@@ -1,5 +1,6 @@
 import argparse
-from ops import process_add_command, process_ls_command, process_rm_command, process_wc_command
+from ops import process_add_command, process_ls_command, process_rm_command, process_wc_command, \
+    process_fw_command
 
 
 def main():
@@ -20,6 +21,13 @@ def main():
     # subparser for 'wc' command
     subparsers.add_parser('wc')
 
+    # subparser for 'freq-words' command
+    freq_parser = subparsers.add_parser('freq-words')
+    freq_parser.add_argument('limit', type=int, help='Limit for frequency of words')
+    freq_parser.add_argument('--order', default='asc',
+                             choices=['asc', 'desc'],
+                             help='Order of frequency of words')
+
     args = parser.parse_args()
 
     if args.store == 'add':
@@ -30,6 +38,9 @@ def main():
         process_rm_command(args.files)
     elif args.store == 'wc':
         process_wc_command()
+    elif args.store == 'freq-words':
+        process_fw_command(args.limit, args.order)
+
 
 
 if __name__ == "__main__":

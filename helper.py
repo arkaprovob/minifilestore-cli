@@ -70,3 +70,16 @@ def delete_file(filename):
             return False, f"Failed to delete '{filename}'. Server responded with status code {response.status_code}."
     except requests.exceptions.RequestException as e:
         return False, f"Network error occurred while trying to delete '{filename}': {str(e)}"
+
+
+def get_word_frequency(no_of_words, most_frequent):
+    try:
+        response = requests.post(BASE_URL + '/frequency',
+                                 params={'noOfWords': no_of_words, 'mostFrequent': most_frequent})
+        if response.status_code == 200:
+            return True, response.json()
+        else:
+            return False, (f"Failed to retrieve word frequency. "
+                           f"Server responded with status code {response.status_code}.")
+    except requests.exceptions.RequestException as e:
+        return False, f"Network error occurred while trying to retrieve word frequency: {str(e)}"
