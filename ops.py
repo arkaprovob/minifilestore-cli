@@ -70,17 +70,17 @@ def process_fw_command(limit, order):
         print(data)
 
 
-def process_update_command(file, old_name, duplicate):
+def process_update_command(file, duplicate):
     filename = os.path.basename(file)
-    print (file, old_name, duplicate)
     file_hash = compute_md5(file)
     exists, response = file_exists(file)
     if exists:
-        server_hash = response.get('hash')
-        server_name = response.get('name')
-        if server_hash != file_hash and server_name == filename:
+        print(f"Ufile: {file}, already exists in server")
+        server_record_hash = response.get('FileHash')
+        server_record_name = response.get('Filename')
+        if server_record_hash != file_hash and server_record_name == filename:
             update_file(file, filename, False, file)
-        elif server_hash == file_hash:
-            update_file(server_name, filename, duplicate, None)
+        elif server_record_hash == file_hash:
+            update_file(server_record_name, filename, duplicate, None)
     else:
         upload_file(filename)

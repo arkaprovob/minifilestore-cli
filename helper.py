@@ -88,12 +88,16 @@ def get_word_frequency(no_of_words, most_frequent):
         return False, f"Network error occurred while trying to retrieve word frequency: {str(e)}"
 
 
-def update_file(prevFilename, filename, duplicate, file_path):
+def update_file(prev_filename, filename, duplicate, file_path):
+    data = {'prevFilename': prev_filename, 'filename': filename, 'duplicate': duplicate}
     try:
-        with open(file_path, 'rb') as f:
-            file_data = {'file': f}
-        data = {'prevFilename': prevFilename, 'filename': filename, 'duplicate': duplicate}
-        response = requests.post(BASE_URL + '/update', files=file_data, data=data)
+        if file_path is not None:
+            with open(file_path, 'rb') as f:
+                file_content = f.read()
+                file_data = {'file': (filename, file_content)}
+                response = requests.post(BASE_URL + '/update', files=file_data, data=data)
+        else:
+            response = requests.post(BASE_URL + '/update', files={'file': None}, data=data)
         if response.status_code == 200:
             print(f"File '{filename}' updated successfully.")
             return True

@@ -31,7 +31,6 @@ def main():
     # subparser for 'freq-words' command
     update_parser = subparsers.add_parser('update')
     update_parser.add_argument('file', help='File to update')
-    update_parser.add_argument('old-name',  help='Previous file name')
     update_parser.add_argument('--duplicate',
                                action='store_true', help='Setting this flag will result in '
                                                          'duplicate file creation. Default is '
@@ -50,7 +49,7 @@ def main():
     elif args.store == 'freq-words':
         process_fw_command(args.limit, args.order)
     elif args.store == 'update':
-        process_update_command(args.file, args.old_name, args.duplicate)
+        process_update_command(args.file, args.duplicate)
 
 
 if __name__ == "__main__":
