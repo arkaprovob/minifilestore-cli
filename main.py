@@ -24,7 +24,7 @@ def main():
     # subparser for 'freq-words' command
     freq_parser = subparsers.add_parser('freq-words')
     freq_parser.add_argument('limit', type=int, help='Limit for frequency of words')
-    freq_parser.add_argument('--order', default='asc',
+    freq_parser.add_argument('--order', default='desc',
                              choices=['asc', 'desc'],
                              help='Order of frequency of words')
 
