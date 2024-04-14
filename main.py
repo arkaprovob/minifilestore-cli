@@ -42,6 +42,5 @@ def main():
         process_fw_command(args.limit, args.order)
 
 
-
 if __name__ == "__main__":
     main()

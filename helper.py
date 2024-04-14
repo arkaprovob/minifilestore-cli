@@ -67,7 +67,8 @@ def delete_file(filename):
         if response.status_code == 200:
             return True, f"File '{filename}' deleted successfully."
         else:
-            return False, f"Failed to delete '{filename}'. Server responded with status code {response.status_code}."
+            return False, (f"Failed to delete '{filename}'. "
+                           f"Server responded with status code {response.status_code}.")
     except requests.exceptions.RequestException as e:
         return False, f"Network error occurred while trying to delete '{filename}': {str(e)}"
 
