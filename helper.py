@@ -5,7 +5,7 @@ import os
 import requests
 import time
 
-BASE_URL = 'http://localhost:8080/api/v1'
+BASE_URL = os.getenv('STORE_BASE_URL', 'http://localhost:8080/api/v1')
 
 
 def compute_md5(filename):
