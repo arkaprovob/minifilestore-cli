@@ -15,10 +15,10 @@ pip install -r requirements.txt
 
 ## Creating an Executable
 
-To create an executable of this project, you can use PyInstaller:
+To create an executable of this project, you can use PyInstaller. Execute the command from the root directory of the project.:
 
 ```shell
-pyinstaller --onefile store.py
+pyinstaller --onefile main.py
 ```
 
 The executable will be created in the dist directory.
