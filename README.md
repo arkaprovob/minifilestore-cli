@@ -13,6 +13,17 @@ To install the required Python packages, run the following command:
 pip install -r requirements.txt
 ```
 
+## Configuration
+
+The base URL of the server can be configured with the `STORE_BASE_URL` environment variable. If this variable is not set, the default value is http://localhost:8080/api/v1.
+
+> **Note:** To use the remote server please run the following command on your machine before running the CLI:
+
+```shell
+export STORE_BASE_URL=https://route-minifs-stage.apps.sandbox-m2.ll9k.p1.openshiftapps.com/api/v1
+````
+
+
 ## Creating an Executable
 
 To create an executable of this project, you can use PyInstaller. Execute the command from the root directory of the project.:
@@ -39,7 +50,7 @@ directly. Commands can be executed as follows:**
 To upload files, use the add command followed by the names of the files you want to upload:
 
 ```shell
-python store.py add file1.txt file2.txt
+python main.py add file1.txt file2.txt
 ```
 
 ### List Files
@@ -47,7 +58,7 @@ python store.py add file1.txt file2.txt
 To list all files, use the ls command:
 
 ```shell
-python store.py ls
+python main.py ls
 ```
 
 ### Remove Files
@@ -55,7 +66,7 @@ python store.py ls
 To remove file, use the rm command followed by the name of the file you want to remove:
 
 ```shell
-python store.py rm file1.txt
+python main.py rm file1.txt
 ```
 
 ### Word Count
@@ -63,7 +74,7 @@ python store.py rm file1.txt
 To get the word count of all files, use the wc command:
 
 ```shell
-python store.py wc
+python main.py wc
 ```
 
 ### Frequency of Words
@@ -71,13 +82,13 @@ python store.py wc
 To get the frequency of words, use the freq-words command followed by the limit:
 
 ```shell
-python store.py freq-words 10
+python main.py freq-words 10
 ```
 
 You can also specify the order of frequency (ascending or descending) with the --order option:
 
 ```shell
-python store.py freq-words 10 --order asc
+python main.py freq-words 10 --order asc
 ```
 
 ### Update Files
@@ -85,17 +96,15 @@ python store.py freq-words 10 --order asc
 To update a file, use the update command followed by the name of the file:
 
 ```shell
-python store.py update file1.txt
+python main.py update file1.txt
 ```
 
 You can also create a duplicate file during the update with the --duplicate option:
 
 ```shell
-python store.py update file1.txt --duplicate
+python main.py update file1.txt --duplicate
 ```
 
 
-## Configuration
 
-The base URL of the server can be configured with the `STORE_BASE_URL` environment variable. If this variable is not set, the default value is http://localhost:8080/api/v1.
 

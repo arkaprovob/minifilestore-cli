@@ -38,7 +38,8 @@ def process_ls_command():
 
 def process_rm_command(files):
     for filename in files:
-        success, message = delete_file(filename)
+        base_filename = os.path.basename(filename)
+        success, message = delete_file(base_filename)
         print(message)
 
 
@@ -79,8 +80,8 @@ def process_update_command(file, duplicate):
         server_record_hash = response.get('FileHash')
         server_record_name = response.get('Filename')
         if server_record_hash != file_hash and server_record_name == filename:
-            update_file(file, filename, False, file)
+            update_file(server_record_name, filename, False, file)
         elif server_record_hash == file_hash:
             update_file(server_record_name, filename, duplicate, None)
     else:
-        upload_file(filename)
+        upload_file(file)

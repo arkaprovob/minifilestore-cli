@@ -20,6 +20,7 @@ def compute_md5(filename):
 def file_exists(filename):
     # Check if a file exists on the server
     file_hash = compute_md5(filename)
+    filename = os.path.basename(filename)
     response = requests.get(BASE_URL + '/exists', params={'hash': file_hash, 'name': filename})
     return response.status_code == 200, response.json() if response.status_code == 200 else None
 
@@ -33,8 +34,9 @@ def upload_file(filename):
         try:
             with open(filename, 'rb') as f:
                 files = {'file': f}
+                base_filename = os.path.basename(filename)
                 response = requests.post(BASE_URL + '/store', files=files,
-                                         data={'filename': filename})
+                                         data={'filename': base_filename})
                 if response.status_code == 200:  # 200 means 'OK' - file uploaded successfully
                     print(f"File '{filename}' uploaded successfully.")
                     return
@@ -90,6 +92,7 @@ def get_word_frequency(no_of_words, most_frequent):
 
 def update_file(prev_filename, filename, duplicate, file_path):
     data = {'prevFilename': prev_filename, 'filename': filename, 'duplicate': duplicate}
+    print(data)
     try:
         if file_path is not None:
             with open(file_path, 'rb') as f:
